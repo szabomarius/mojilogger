@@ -1,0 +1,41 @@
+{
+  "name": "emoji-log-id",
+  "version": "0.1.0",
+  "description": "console logs tagged with a unique emoji based on unique identifiers to easily distinguish between identical log sources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szabomarius/emoji-log-id.git"
+  },
+  "keywords": [
+    "logging",
+    "emoji",
+    "console",
+    "debug",
+    "session",
+    "tagging",
+    "nodejs",
+    "typescript",
+    "trace",
+    "unique-id",
+    "development",
+    "monitoring",
+    "custom-log",
+    "formatted-logs",
+    "stdout",
+    "cli",
+    "visualization",
+    "identifier",
+    "colored-logs",
+    "emoji-logs"
+  ],
+  "author": "Marius Szabo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/szabomarius/emoji-log-id/issues"
+  },
+  "homepage": "https://github.com/szabomarius/emoji-log-id#readme"
+}
