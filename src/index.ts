@@ -1,6 +1,6 @@
 import { NO_ID_SYMBOL } from "./config/config";
 import { isEmojiString } from "./utils/checks";
-import { getUniqueEmoji } from "./utils/generator";
+import { getUniqueEmoji } from "./stateful/generator";
 
 type log = (id: any, message?: any, ...optionalParams: any[]) => void;
 type logOptions = {

@@ -10,6 +10,7 @@ describe('mojilogger- withId', () => {
   
     afterEach(() => {
       jest.resetAllMocks();
+      jest.resetModules();
     });
   
     it('logs to console', () => {
