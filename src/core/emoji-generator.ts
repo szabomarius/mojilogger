@@ -18,11 +18,10 @@ export function* EmojiGenerator(start: number = 0x2600): Generator<string, null,
           (currentEmojiCodePoint >= 0x1F680 && currentEmojiCodePoint <= 0x1F6FF) ||
           (currentEmojiCodePoint >= 0x1F700 && currentEmojiCodePoint <= 0x1F77F)
         ) {
-          try {
-            yield String.fromCodePoint(currentEmojiCodePoint)
-          } catch (e) {
-            return null;
-          }
+          // doesn't throw an error because of the checks,
+          // if you move this fromCodePoint anywhere else you need to check
+          // if the unicode point is not overflowing or try/catch it 
+          yield String.fromCodePoint(currentEmojiCodePoint)
         }
     
         // End of Unicode range

@@ -54,7 +54,7 @@ export class EmojiAssigner {
      * @returns - A map of identifiers to emojis
      */
     public getEmojiMap(): Map<any, string> {
-        return this.emojiMap;
+        return new Map(this.emojiMap);
     }
 
     /**

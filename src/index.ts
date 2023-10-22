@@ -1,5 +1,4 @@
 import { NO_ID_SYMBOL } from "./config/config";
-import { isEmojiString } from "./utils/utils";
 import { LogOptions, MojiLogger } from "./types/types";
 import { EmojiAssigner } from "./core/emoji-assigner";
 
@@ -7,7 +6,7 @@ let mojiAssigner = new EmojiAssigner(new Map());
 
 function log({id , customEmoji}: LogOptions, message?: any, ...optionalParams: any[]): void {
     let emoji: string;
-    if (customEmoji && isEmojiString(customEmoji)) {
+    if (customEmoji && typeof customEmoji === 'string') {
         emoji = mojiAssigner.assignEmojiForId(id, customEmoji);
     } else {
         emoji = mojiAssigner.assignEmojiForId(id);
