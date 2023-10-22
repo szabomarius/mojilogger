@@ -3,7 +3,7 @@ export type MojiLogger = {
      * @param id - An identifier that gets matched with an emoji
      * @param emoji - Optional emoji to use instead of the generated one
      */
-    withId: (id: any, customEmoji?: string) => Log,
+    withId: (id: any, customEmoji?: string) => { log: Log },
     /**
      * console logs with 💬 prepended 
      */
@@ -12,7 +12,7 @@ export type MojiLogger = {
      * A map of identifiers to emojis
      * This map gets updated when you use the withId function
      */
-    mappedMojis: Map<any, string>,
+    getMojiMap: () => Map<any, string>,
     /**
      * Sets a custom emoji list for the logger to use when
      * it assignes emojist to ids.
