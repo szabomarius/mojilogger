@@ -63,7 +63,7 @@ export class EmojiAssigner {
      */
     private _getNewEmoji(): string | null {
         if (this.emojiList.length  > 0) {
-            return this.emojiList.pop()!;
+            return this.emojiList.shift()!;
         }
         return this.emojiGenerator.next().value;
     }

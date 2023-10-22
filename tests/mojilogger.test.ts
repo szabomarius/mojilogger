@@ -1,5 +1,5 @@
-import { DEFAULT_EMOJI_LIST } from "./config/config";
-import { mojilogger } from "./index";
+import { DEFAULT_EMOJI_LIST } from "../src/config/config";
+import { mojilogger } from "../src/index";
 describe('mojilogger', () => {
     let consoleLogSpy: jest.SpyInstance;
     beforeEach(() => {
@@ -26,6 +26,22 @@ describe('mojilogger', () => {
         mojilogger.withId('test').log('Hello, world!');
         const lastEmoji = consoleLogSpy.mock.calls[consoleLogSpy.mock.calls.length - 1][0];
         expect(list).not.toContain(lastEmoji);
+    });
+    it('logs with custom list of emojis if given', () => {
+        const list = ['👍', '👎'];
+        mojilogger.setMojiList(list);
+        for (let index in list) {
+            mojilogger.withId(index).log('Hello, world!');
+            expect(consoleLogSpy).toHaveBeenCalledWith(list[index], 'Hello, world!');
+        }
+    });
+    it('returns the default list of emojis', () => {
+        expect(mojilogger.getMojiList()).toEqual(DEFAULT_EMOJI_LIST);
+    });
+    it('returns the custom list of emojis', () => {
+        const list = ['👍', '👎'];
+        mojilogger.setMojiList(list);
+        expect(mojilogger.getMojiList()).toEqual(list);
     });
     it('logs with unique emojis for different ids', () => {
         const mojiList = [];
@@ -68,14 +84,12 @@ describe('mojilogger', () => {
         mojilogger.withId('test', fakeString).log('Hello, world!');
         expect(consoleLogSpy).toHaveBeenCalledWith(DEFAULT_EMOJI_LIST[0], 'Hello, world!');
     });
-
     it('gets new instance of emoji map', () => {
         const map = mojilogger.getMojiMap();
         mojilogger.log('Hello, world!');
         const map2 = mojilogger.getMojiMap();
         expect(map).not.toBe(map2);
     });
-
     it('gets an updated instance of the emoji mapping', () => {
         const id = 'hello';
         mojilogger.withId(id).log('Hello, world!');
