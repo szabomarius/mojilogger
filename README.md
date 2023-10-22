@@ -1,5 +1,5 @@
 # mojilogger
-Console logs tagged with a unique emoji based on unique identifiers to easily distinguish between identical log sources.
+Console logs tagged with a unique emoji based on *any* identifiers to easily distinguish between identical log sources.
 
 🔷 Typescript ready
 ✅ Wrapper over `console.log`
