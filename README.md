@@ -41,11 +41,10 @@ mojilogger.withId('API').log('Fetching data...');
 mojilogger.withId('DB').log('Fetching data...');
 mojilogger.withId('API').log('Data received...');
 mojilogger.withId('DB').log('Data received...');
-// Console Output: 
-🌟 Fetching data...
-💧 Fetching data...
-🌟 Data received...
-💧 Data received...
+// Console Output: 🌟 Fetching data...
+// Console Output: 💧 Fetching data...
+// Console Output: 🌟 Data received...
+// Console Output: 💧 Data received...
 ```
 
 #### Assign a custom emoji for specific id:
@@ -54,11 +53,10 @@ mojilogger.withId('API','👽').log('Fetching data...');
 mojilogger.withId('DB').log('Fetching data...');
 mojilogger.withId('API').log('Data received...');
 mojilogger.withId('DB').log('Data received...');
-// Console Output: 
-👽 Fetching data...
-💧 Fetching data...
-👽 Data received...
-💧 Data received...
+// Console Output: 👽 Fetching data...
+// Console Output: 💧 Fetching data...
+// Console Output: 👽 Data received...
+// Console Output: 💧 Data received...
 ```
 
 #### To get the map of identifiers to emojis:
@@ -66,6 +64,13 @@ mojilogger.withId('DB').log('Data received...');
 ```javascript
 const map = mojilogger.getMojiMap();
 console.log(map);
+```
+
+#### You can use existing console log functionalities:
+```javascript
+const data = 20;
+mojilogger.withId('DB').log('Fetching data...', data);
+// Console Output: 🌟 Fetching data... 20
 ```
 
 ### Custom Emoji List
@@ -111,8 +116,8 @@ mojilogger.resetAll();
 
 ### Creative usages
 store the logger after scoping it with an id:
-```javascript
-import { mojilogger, MojiLog } from 'mojilogger';
+```typescript
+import { mojilogger, type MojiLog } from 'mojilogger';
 class Service {
   private readonly logger: MojiLog;
   constructor() {
@@ -120,7 +125,12 @@ class Service {
     this.logger.log('Hello from this service');
   }
 }
-
+```
+```typescript
+const serviceOne = new Service();
+const serviceTwo = new Service();
+// Console Output: 🌟 Hello from this service
+// Console Output: 💧 Hello from this service
 ```
 extend / modify the default moji list:
 ```javascript
@@ -131,3 +141,8 @@ mojilogger.withId('DB').log('Fetching data...');
 // Console Output: 😄 Fetching data...
 // Console Output: 🌟 Fetching data...
 ```
+
+---
+
+### License
+This project is licensed under the MIT License - see the LICENSE.md file for details.

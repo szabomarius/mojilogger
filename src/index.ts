@@ -13,7 +13,7 @@ function log({id , customEmoji}: LogOptions, message?: any, ...optionalParams: a
     }
     console.log(emoji, message, ...optionalParams);
 }
-
+export type { MojiLog } from './types/types';
 export const mojilogger: MojiLogger = {
     withId: (id: any, customEmoji?: string) => {
         return {

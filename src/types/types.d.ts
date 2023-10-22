@@ -3,11 +3,11 @@ export type MojiLogger = {
      * @param id - An identifier that gets matched with an emoji
      * @param emoji - Optional emoji to use instead of the generated one
      */
-    withId: (id: any, customEmoji?: string) => { log: Log },
+    withId: (id: any, customEmoji?: string) => MojiLog,
     /**
      * console logs with 💬 prepended 
      */
-    log: Log,
+    log: LogFunction,
     /**
      * A map of identifiers to emojis
      * This map gets updated when you use the withId function
@@ -36,7 +36,10 @@ export type MojiLogger = {
     resetAll: () => void
     
 }
-export type Log = (id: any, message?: any, ...optionalParams: any[]) => void;
+export type LogFunction = (id: any, message?: any, ...optionalParams: any[]) => void;
+export type MojiLog = {
+    log: LogFunction
+}
 export type LogOptions = {
     id: any,
     customEmoji?: string
