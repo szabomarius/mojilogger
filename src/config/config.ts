@@ -1,4 +1,4 @@
-export const DISTINCT_EMOJI_LIST = [
+export const DEFAULT_EMOJI_LIST = [
     "🌟", "💧", "❤️", "🚗", "🎵", "⏰", "🔑",
     "🎈", "📘", "⚽", "✈️", "🚢", "⚡", "🍎",
     "☎️", "📺", "💡", "🔔", "⚓", "📷", "🎉",
@@ -12,3 +12,5 @@ export const DISTINCT_EMOJI_LIST = [
 ];
 
 export const NO_ID_SYMBOL = Symbol();
+
+export const NO_MORE_EMOJI = "o🚫o";
