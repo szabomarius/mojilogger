@@ -10,13 +10,13 @@ describe('mojilogger - when using id -> color scoping', () => {
     it('logs with color scoping', () => {
         mojilogger.withId('test').withId('other').log('Hello, world!');
         expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-        expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} Hello, world!`, `background-color: ${DEFAULT_COLOR_LIST[0]}, color: #fff`);
+        expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} Hello, world!`, `background-color: ${DEFAULT_COLOR_LIST[0]}, color: #fff`);
     });
 
     it('logs with custom color scoping', () => {
         mojilogger.withId('test').withId('other','#333').log('Hello, world!');
         expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-        expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} Hello, world!`, `background-color: #333, color: #fff`);
+        expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} Hello, world!`, `background-color: #333, color: #fff`);
     });
     it('logs with same color for same id', () => {
         mojilogger.withId('test').withId('other','#333').log('Hello, world!');
@@ -32,18 +32,18 @@ describe('mojilogger - when using id -> color scoping', () => {
         const list = [...DEFAULT_COLOR_LIST];
         for (let index in list) {
             mojilogger.withId('ids').withId(index).log('h');
-            expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} h`, `background-color: ${list[index]}, color: #fff`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} h`, `background-color: ${list[index]}, color: #fff`);
         }
     });
     it('repeats the #000 color when reaching the end of list', () => {
         const list = [...DEFAULT_COLOR_LIST];
         for (let index in list) {
             mojilogger.withId('id').withId(index).log('h');
-            expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} h`, `background-color: ${list[index]}, color: #fff`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} h`, `background-color: ${list[index]}, color: #fff`);
         }
         for (let index in list) {
             mojilogger.withId('id').withId(index + 'new').log('h');
-            expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} h`, `background-color: #000, color: #fff`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} h`, `background-color: #000, color: #fff`);
         }
     });
     it('returns the list of default colors', () => {
@@ -70,6 +70,14 @@ describe('mojilogger - when using id -> color scoping', () => {
         const list = ['#fff', '#000'];
         mojilogger.setColorList(list);
         mojilogger.withId('id').withId('id2').log('h');
-        expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} h`, `background-color: #fff, color: #fff`);
+        expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} h`, `background-color: #fff, color: #fff`);
+    });
+
+    it('colors just the emoji when message is not a string', () => {
+        const list = ['#fff', '#000'];
+        mojilogger.setColorList(list);
+        let message = { hello: 'world' };
+        mojilogger.withId(1).withId(2).log(message);
+        expect(consoleLogSpy).toHaveBeenCalledWith(`%c ${DEFAULT_EMOJI_LIST[0]} `, `background-color: #fff, color: #fff`, message);
     });
 });

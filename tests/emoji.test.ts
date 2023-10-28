@@ -96,4 +96,10 @@ describe('mojilogger - when using id -> emoji scoping', () => {
         const map = mojilogger.getMojiMap();
         expect(map.get(id)).toEqual(consoleLogSpy.mock.calls[0][0].split(' ')[0]);
     });
+
+    it('logs with other message types', () => {
+        let message = { hello: 'world' };
+        mojilogger.withId(1).log(message);
+        expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} `, message);
+    });
 });
