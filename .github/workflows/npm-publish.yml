@@ -14,7 +14,6 @@ jobs:
           node-version: 20.9.0
       - run: npm ci
       - run: npm run test
-      - run: npm run build
       - name: Validate version
         run: |
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
@@ -35,6 +34,7 @@ jobs:
           node-version: 20.9.0
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
