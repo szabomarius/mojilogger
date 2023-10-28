@@ -1,6 +1,6 @@
 import { DEFAULT_EMOJI_LIST } from "../src/config/config";
 import { mojilogger } from "../src/index";
-describe('mojilogger', () => {
+describe('mojilogger - when using id -> emoji scoping', () => {
     let consoleLogSpy: jest.SpyInstance;
     beforeEach(() => {
         mojilogger.resetAll();
