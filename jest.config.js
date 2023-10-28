@@ -9,5 +9,5 @@ module.exports = {
             lines: 80
         }
     },
-    setupFilesAfterEnv: ['<rootDir>\\tests\\setup-tests.ts'],
+    setupFilesAfterEnv: ['<rootDir>/tests/setup-tests.ts'],
 };
