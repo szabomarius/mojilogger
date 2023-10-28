@@ -1,13 +1,17 @@
 import { NO_ID_SYMBOL } from "../config/config";
 import { LogOptions, MojiLog, MojiLogger } from "../types/types";
-import { ColorAssigner } from "./color-assigner";
-import { EmojiAssigner } from "./emoji-assigner";
+import { Assigner } from "./assigner";
 
 export class Mojilogger implements MojiLogger {
+    private emojiAssigner: Assigner;
+    private colorAssigner: Assigner;
     constructor(
-        private emojiAssigner: EmojiAssigner = new EmojiAssigner(new Map()),
-        private colorAssigner: ColorAssigner = new ColorAssigner(new Map()),
-    ) {}
+        private createEmojiAssigner: () => Assigner,
+        private createColorAssigner: () => Assigner,
+    ) {
+        this.emojiAssigner = createEmojiAssigner();
+        this.colorAssigner = createColorAssigner();
+    }
 
     public withId(id: any, customEmoji?: string | undefined): MojiLog {
         return {
@@ -25,46 +29,46 @@ export class Mojilogger implements MojiLogger {
     }
 
     public getMojiMap(): Map<any, string> {
-        return this.emojiAssigner.getEmojiMap();
+        return this.emojiAssigner.getMap();
     }
 
     public getColorMap(): Map<any, string> {
-        return this.colorAssigner.getColorMap();
+        return this.colorAssigner.getMap();
     }
 
     public setMojiList(emojiList: string[]): void {
-        this.emojiAssigner.setEmojiList(emojiList);
+        this.emojiAssigner.setList(emojiList);
     }
 
     public getMojiList(): string[] {
-        return this.emojiAssigner.getEmojiList();
+        return this.emojiAssigner.getList();
     }
 
     public setColorList(colorList: string[]): void {
-        this.colorAssigner.setColorList(colorList);
+        this.colorAssigner.setList(colorList);
     }
 
     public getColorList(): string[] {
-        return this.colorAssigner.getColorList();
+        return this.colorAssigner.getList();
     }
 
     public resetAll(): void {
-        this.emojiAssigner = new EmojiAssigner(new Map());
-        this.colorAssigner = new ColorAssigner(new Map());
+        this.emojiAssigner = this.createEmojiAssigner();
+        this.colorAssigner = this.createColorAssigner();
     }
 
     private assignEmojiForId(id: any, customEmoji?: string): string {
         if (customEmoji && typeof customEmoji === 'string') {
-            return this.emojiAssigner.assignEmojiForId(id, customEmoji);
+            return this.emojiAssigner.assign(id, customEmoji);
         }
-        return this.emojiAssigner.assignEmojiForId(id);
+        return this.emojiAssigner.assign(id);
     }
 
     private assignColorForId(id: any, customColor?: string): string {
         if (customColor && typeof customColor === 'string') {
-            return this.colorAssigner.assignColorForId(id, customColor);
+            return this.colorAssigner.assign(id, customColor);
         }
-        return this.colorAssigner.assignColorForId(id);
+        return this.colorAssigner.assign(id);
     }
 
     private _log({id , customEmoji, extra}: LogOptions, message?: any, ...optionalParams: any[]): void {

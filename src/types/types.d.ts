@@ -68,3 +68,17 @@ export type LogOptions = {
         customColor?: string
     }
 }
+
+export type SymbolAssigner = {
+    assign: (id: any, customSymbol: string) => string,
+    setList: (list: string[]) => void,
+    getList: () => string[],
+    getMap: () => Map<any, string>
+}
+
+export type SymbolAssignerOptions = {
+    symbolList: string[],
+    symbolMap: Map<any, string>,
+    defaultSymbol: string,
+    symbolGenerator?: Generator<string, null, void>
+}
