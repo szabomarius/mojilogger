@@ -9,13 +9,13 @@ describe('mojilogger', () => {
     it('logs with default emoji when calling log', () => {
         mojilogger.log('Hello, world!');
         expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-        expect(consoleLogSpy).toHaveBeenCalledWith('💬', 'Hello, world!');
+        expect(consoleLogSpy).toHaveBeenCalledWith('💬 Hello, world!');
     });
     it('logs with default list of emojis', () => {
         const list = [...DEFAULT_EMOJI_LIST];
         for (let index in list) {
             mojilogger.withId(index).log('Hello, world!');
-            expect(consoleLogSpy).toHaveBeenCalledWith(list[index], 'Hello, world!');
+            expect(consoleLogSpy).toHaveBeenCalledWith(`${list[index]} Hello, world!`);
         }
     });
     it('logs with different emojis after finishing emoji list', () => {
@@ -32,7 +32,7 @@ describe('mojilogger', () => {
         mojilogger.setMojiList(list);
         for (let index in list) {
             mojilogger.withId(index).log('Hello, world!');
-            expect(consoleLogSpy).toHaveBeenCalledWith(list[index], 'Hello, world!');
+            expect(consoleLogSpy).toHaveBeenCalledWith(`${list[index]} Hello, world!`);
         }
     });
     it('returns the default list of emojis', () => {
@@ -47,7 +47,7 @@ describe('mojilogger', () => {
         const mojiList = [];
         for (let i = 0; i < 1778; i++) {
             mojilogger.withId(i).log('Hello, world!');
-            mojiList.push(consoleLogSpy.mock.calls[i][0]);
+            mojiList.push(consoleLogSpy.mock.calls[i][0].split(' ')[0]);
         }
         expect(mojiList).toEqual([...new Set(mojiList)]);
     });
@@ -55,7 +55,7 @@ describe('mojilogger', () => {
         const mojiList = [];
         for (let i = 0; i < 1778; i++) {
             mojilogger.withId('hello').log(i);
-            mojiList.push(consoleLogSpy.mock.calls[i][0]);
+            mojiList.push(consoleLogSpy.mock.calls[i][0].split(' ')[0]);
         }
         expect([...new Set(mojiList)]).toHaveLength(1);
     });
@@ -66,23 +66,23 @@ describe('mojilogger', () => {
         mojilogger.withId('test').log('Hello, world!');
         mojilogger.withId('test2').log('Hello, world!');
 
-        const secondLastEmoji = consoleLogSpy.mock.calls[consoleLogSpy.mock.calls.length - 2][0];
-        const lastEmoji = consoleLogSpy.mock.calls[consoleLogSpy.mock.calls.length - 1][0];
+        const secondLastEmoji = consoleLogSpy.mock.calls[consoleLogSpy.mock.calls.length - 2][0].split(' ')[0];
+        const lastEmoji = consoleLogSpy.mock.calls[consoleLogSpy.mock.calls.length - 1][0].split(' ')[0];
         expect(secondLastEmoji).toEqual('o🚫o');
         expect(lastEmoji).toEqual('o🚫o');
     });
     it('logs with custom emoji', () => {
         mojilogger.withId('test', '👍').log('Hello, world!');
-        expect(consoleLogSpy).toHaveBeenCalledWith('👍', 'Hello, world!');
+        expect(consoleLogSpy).toHaveBeenCalledWith('👍 Hello, world!');
     });
     it('logs with custom emoji even if its not necessarily an emoji', () => {
         mojilogger.withId('test', 'o.o').log('Hello, world!');
-        expect(consoleLogSpy).toHaveBeenCalledWith('o.o', 'Hello, world!');
+        expect(consoleLogSpy).toHaveBeenCalledWith('o.o Hello, world!');
     });
     it('does not log with custom emoji if emoji is not a string', () => {
         const fakeString: any = 1;
         mojilogger.withId('test', fakeString).log('Hello, world!');
-        expect(consoleLogSpy).toHaveBeenCalledWith(DEFAULT_EMOJI_LIST[0], 'Hello, world!');
+        expect(consoleLogSpy).toHaveBeenCalledWith(`${DEFAULT_EMOJI_LIST[0]} Hello, world!`);
     });
     it('gets new instance of emoji map', () => {
         const map = mojilogger.getMojiMap();
@@ -94,6 +94,6 @@ describe('mojilogger', () => {
         const id = 'hello';
         mojilogger.withId(id).log('Hello, world!');
         const map = mojilogger.getMojiMap();
-        expect(map.get(id)).toEqual(consoleLogSpy.mock.calls[0][0]);
+        expect(map.get(id)).toEqual(consoleLogSpy.mock.calls[0][0].split(' ')[0]);
     });
 });
