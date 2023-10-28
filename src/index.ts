@@ -1,36 +1,25 @@
-import { NO_ID_SYMBOL } from "./config/config";
-import { LogOptions, MojiLogger } from "./types/types";
-import { EmojiAssigner } from "./core/emoji-assigner";
+import { DEFAULT_COLOR_LIST, DEFAULT_EMOJI_LIST, NO_MORE_EMOJI } from './config/config';
+import { EmojiGenerator } from './core/emoji-generator';
+import { Assigner } from './core/assigner';
+import { Mojilogger } from './core/moji-logger';
+import { MojiLogger } from './types/types';
 
-let mojiAssigner = new EmojiAssigner(new Map());
-
-function log({id , customEmoji}: LogOptions, message?: any, ...optionalParams: any[]): void {
-    let emoji: string;
-    if (customEmoji && typeof customEmoji === 'string') {
-        emoji = mojiAssigner.assignEmojiForId(id, customEmoji);
-    } else {
-        emoji = mojiAssigner.assignEmojiForId(id);
-    }
-    console.log(emoji, message, ...optionalParams);
+const mojiFactory = () => {
+    return new Assigner({
+        defaultSymbol: NO_MORE_EMOJI,
+        symbolList: DEFAULT_EMOJI_LIST,
+        symbolMap: new Map(),
+        symbolGenerator: EmojiGenerator(),
+    })
 }
+
+const colorFactory = () => {
+    return new Assigner({
+        defaultSymbol: '#000',
+        symbolList: DEFAULT_COLOR_LIST,
+        symbolMap: new Map(),
+    })
+}
+
+export const mojilogger: MojiLogger = new Mojilogger(mojiFactory, colorFactory);
 export type { MojiLog } from './types/types';
-export const mojilogger: MojiLogger = {
-    withId: (id: any, customEmoji?: string) => {
-        return {
-            log: log.bind(null, {id, customEmoji})
-        }
-    },
-    log: log.bind(null, {id: NO_ID_SYMBOL, customEmoji: '💬'}),
-    getMojiMap: () => {
-        return mojiAssigner.getEmojiMap();
-    },
-    setMojiList: (emojiList: string[]) => {
-        mojiAssigner.setEmojiList(emojiList);
-    },
-    getMojiList: () => {
-        return mojiAssigner.getEmojiList();
-    },
-    resetAll: () => {
-        mojiAssigner = new EmojiAssigner(new Map());
-    }
-};
