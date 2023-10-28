@@ -77,7 +77,7 @@ export class Mojilogger implements MojiLogger {
         let colorParam = undefined;
         if (extra && extra.id) {
             const color = this.assignColorForId(extra.id, extra.customColor);
-            colorParam = `background-color: ${color}, color: #fff`;
+            colorParam = `background-color: ${color}; color: #fff`;
             emoji = `%c ${emoji}`;
         }
         if (typeof message === 'string') {
