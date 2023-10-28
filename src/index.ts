@@ -11,9 +11,15 @@ function log({id , customEmoji}: LogOptions, message?: any, ...optionalParams: a
     } else {
         emoji = mojiAssigner.assignEmojiForId(id);
     }
-    console.log(emoji, message, ...optionalParams);
+    if (typeof message === 'string') {
+        // If it's a string we need to use the first argument as the message
+        // because of color coding
+        console.log(`${emoji} ${message}`, ...optionalParams);
+    } else {
+        console.log(emoji, message, ...optionalParams);
+    }
 }
-export type { MojiLog } from './types/types';
+
 export const mojilogger: MojiLogger = {
     withId: (id: any, customEmoji?: string) => {
         return {
@@ -34,3 +40,4 @@ export const mojilogger: MojiLogger = {
         mojiAssigner = new EmojiAssigner(new Map());
     }
 };
+export type { MojiLog } from './types/types';

@@ -36,7 +36,7 @@ export type MojiLogger = {
     resetAll: () => void
     
 }
-export type LogFunction = (id: any, message?: any, ...optionalParams: any[]) => void;
+export type LogFunction = (message?: any, ...optionalParams: any[]) => void;
 export type MojiLog = {
     log: LogFunction
 }
