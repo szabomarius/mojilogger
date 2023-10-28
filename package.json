@@ -1,6 +1,6 @@
 {
   "name": "mojilogger",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "console logs tagged with a unique emoji based on unique identifiers to easily distinguish between identical log sources",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
