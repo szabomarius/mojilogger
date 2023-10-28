@@ -22,6 +22,9 @@ yarn add mojilogger
 ```javascript
 import { mojilogger } from 'mojilogger';
 ```
+```javascript
+const { mojilogger } = require('mojilogger');
+```
 #### Log a message with an id:
 ```javascript
 mojilogger.withId('API').log('Fetching data...');
@@ -73,6 +76,8 @@ mojilogger.withId('DB').log('Fetching data...', data);
 // Console Output: 🌟 Fetching data... 20
 ```
 
+
+
 ### Custom Emoji List
 The default emoji list starts with the star emoji "🌟" and is as follows:
 ```bash
@@ -91,20 +96,52 @@ The default emoji list starts with the star emoji "🌟" and is as follows:
 After `🔭`, the logger will generate unused emojis until it reaches out of unique ones.
 Will assign `o🚫o` to all other ids when it runs out of emojis. (More precise after 1778 emojis are used)
 
-**You can set a custom emoji list for new identifiers:**
+#### You can set a custom emoji list for new identifiers:
 ```javascript
 mojilogger.setMojiList(['😄','🌈','🚀']);
 mojilogger.withId('API').log('Fetching data...');
 // Console Output: 😄 Fetching data...
 ```
 
-**To retrieve the emoji list being used:**
+#### To retrieve the emoji list being used:
 ```javascript
 const list = mojilogger.getMojiList();
 console.log(list);
 ```
 
-#### Resetting the Logger
+### Second Id level scoping
+
+#### You can use a second level color scoping:
+```javascript
+const data = 20;
+mojilogger.withId('DB').withId('MYSQL').log('Fetching data...', data);
+// Console Output: 🌟 Fetching data... 20
+```
+<span style="background-color:#FF5733; color:#fff">🌟 Fetching data...</span><span> 20</span>
+
+#### You can use a custom color:
+```javascript
+const data = 20;
+mojilogger.withId('DB').withId('MYSQL', '#333').log('Fetching data...', data);
+// Console Output: 🌟 Fetching data... 20
+```
+<span style="background-color:#333; color:#fff">🌟 Fetching data...</span><span> 20</span>
+
+#### To retrieve the color list being used:
+```javascript
+const list = mojilogger.getColorList();
+console.log(list);
+```
+
+#### You can set a custom color list for new identifiers:
+```javascript
+mojilogger.setColorList(['#802080','#222','#333']);
+mojilogger.withId('API').withId('CDN').log('Fetching data...');
+// Console Output: 🌟 Fetching data...
+```
+<span style="background-color:#802080; color:#fff">🌟 Fetching data...</span><span> 20</span>
+
+### Resetting the Logger
 To reset all mappings and restore to default state:
 ```javascript
 mojilogger.resetAll();
@@ -135,7 +172,7 @@ const serviceTwo = new Service();
 extend / modify the default moji list:
 ```javascript
 const list = mojilogger.getMojiList();
-mojilogger.setMojiList([...['😄'], ...list]);
+mojilogger.setMojiList(['😄', ...list]);
 mojilogger.withId('API').log('Fetching data...');
 mojilogger.withId('DB').log('Fetching data...');
 // Console Output: 😄 Fetching data...
